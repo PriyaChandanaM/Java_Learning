@@ -1,0 +1,540 @@
+1. Java Basics, Operators & Control Flow
+
+
+public class BasicBanking1 {
+
+    public static void main(String[] args) {
+
+        String customerName = "Riya";
+        int age = 28;
+        double balance = 45000.0;
+        double deposit = 5000.0;
+        double withdrawal = 2000.0;
+
+        System.out.println("Customer Name: " + customerName);
+        System.out.println("Age: " + age);
+        System.out.println("Current Balance: " + balance);
+
+        double finalBalance = balance + deposit - withdrawal;
+        System.out.println("Final Balance: " + finalBalance);
+
+        boolean hasAtLeastFiftyThousand = finalBalance >= 50000;
+        System.out.println("Balance is at least 50,000: "
+                + hasAtLeastFiftyThousand);
+
+        boolean isEligible = age >= 18 && finalBalance > 0;
+        System.out.println("Age is 18+ and balance is positive: " + isEligible);
+
+
+        if (finalBalance >= 10000) {
+            System.out.println("Minimum balance maintained");
+        } else {
+            System.out.println("Low balance");
+        }
+
+
+        String accountType = "SAVINGS";
+
+        switch (accountType) {
+            case "SAVINGS":
+                System.out.println("This is a Savings account.");
+                break;
+            case "CURRENT":
+                System.out.println("This is a Current account.");
+                break;
+            default:
+                System.out.println("Invalid account type.");
+        }
+
+        for (int transactionNumber = 1; transactionNumber <= 5; transactionNumber++) {
+            System.out.println("Transaction Number: " + transactionNumber);
+        }
+
+        int counter = 0;
+
+        while (counter < 3) {
+            System.out.println("Balance: " + finalBalance);
+            counter++;
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.Methods, Arrays & Strings
+
+public class BankingMethods2 {
+
+    static double calculateInterest(double balance, double rate) {
+        return balance * rate / 100;
+    }
+
+    // Overloaded method
+    static double calculateInterest(double balance, double rate, int years) {
+        return (balance * rate * years) / 100;
+    }
+
+    public static void main(String[] args) {
+        String[] customers = {"Riya", "Arjun", "Meera", "Kabir"};
+        double[] balances = {45000, 62000, 18000, 76000};
+
+        double interestQ9 = calculateInterest(50000, 4);
+        System.out.println("Interest for 50,000 at 4%: " + interestQ9);
+
+        System.out.println("\nCustomer Names:");
+        for (String customer : customers) {
+            System.out.println(customer);
+        }
+
+        double maxBalance = balances[0];
+        for (int i = 1; i < balances.length; i++) {
+            if (balances[i] > maxBalance) {
+                maxBalance = balances[i];
+            }
+        }
+        System.out.println("\nHighest balance: " + maxBalance);
+
+        String branch = "Delhi Central";
+        System.out.println("\nBranch length: " + branch.length());
+        System.out.println("Branch uppercase: " + branch.toUpperCase());
+
+        boolean containsDelhi = branch.contains("Delhi");
+        System.out.println("Branch contains 'Delhi': " + containsDelhi);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+3.Object-Oriented Programming
+
+class BankAccount {
+    private int accountNumber;
+    private String holderName;
+    private double balance;
+
+    BankAccount(int accountNumber, String holderName, double balance) {
+        this.accountNumber = accountNumber;
+        this.holderName = holderName;
+        this.balance = balance;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+
+    public void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawal successful: " + amount);
+        } else {
+            System.out.println("Insufficient balance.");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+
+    public String getHolderName() {
+        return holderName;
+    }
+
+    public void setHolderName(String holderName) {
+        this.holderName = holderName;
+    }
+
+
+    public void displayAccountType() {
+        System.out.println("Account Type: Regular Bank Account");
+    }
+}
+
+
+class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    SavingsAccount(int accountNumber, String holderName,
+                   double balance, double interestRate) {
+        super(accountNumber, holderName, balance);
+        this.interestRate = interestRate;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    @Override
+    public void displayAccountType() {
+        System.out.println("Account Type: Savings Account");
+    }
+}
+
+public class BankingOOP3 {
+    public static void main(String[] args) {
+
+
+        BankAccount account1 = new BankAccount(1001, "Riya", 45000);
+        SavingsAccount account2 =
+                new SavingsAccount(1002, "Arjun", 62000, 4.5);
+
+        System.out.println("Riya's balance: " + account1.getBalance());
+        System.out.println("Arjun's balance: " + account2.getBalance());
+
+
+        account1.deposit(2500);
+        System.out.println("Riya's updated balance: " + account1.getBalance());
+
+
+        account1.withdraw(5000);
+        System.out.println("Balance after withdrawal: " + account1.getBalance());
+
+
+        account1.setHolderName("Riya Sharma");
+        System.out.println("Updated holder name: " + account1.getHolderName());
+
+
+        account1.displayAccountType();
+        account2.displayAccountType();
+
+        System.out.println("Savings interest rate: "
+                + account2.getInterestRate() + "%");
+    }
+}
+
+
+4. Exception Handling
+
+public class ExceptionHandling4 {
+
+
+    static void withdraw(double balance, double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException(
+                    "Withdrawal amount must be greater than zero."
+            );
+        }
+
+        if (amount > balance) {
+            System.out.println("Insufficient balance.");
+        } else {
+            balance -= amount;
+            System.out.println("Withdrawal successful.");
+            System.out.println("Remaining balance: " + balance);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        try {
+            int amount = Integer.parseInt("5000");
+            System.out.println("Amount: " + amount);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid amount");
+        } finally {
+            System.out.println("Transaction check completed");
+        }
+
+
+        try {
+            int amount = Integer.parseInt("five thousand");
+            System.out.println("Amount: " + amount);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid amount");
+        } finally {
+            System.out.println("Transaction check completed");
+        }
+
+
+        try {
+            int firstNumber = 10;
+            int secondNumber = 0;
+            int result = firstNumber / secondNumber;
+
+            System.out.println("Division result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Cannot divide by zero.");
+        }
+
+        try {
+            withdraw(45000, 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+5. Collections Framework
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class CustomerList5 {
+    public static void main(String[] args) {
+        List<String> customers = new ArrayList<>();
+
+        customers.add("Riya");
+        customers.add("Arjun");
+        customers.add("Meera");
+        customers.add("Riya");
+
+        for (String customer : customers) {
+            System.out.println(customer);
+        }
+
+        System.out.println(customers.size());
+
+        customers.remove("Arjun");
+        System.out.println(customers);
+
+        Set<String> uniqueCustomers = new HashSet<>(customers);
+        System.out.println(uniqueCustomers);
+
+        uniqueCustomers.add("Kabir");
+        System.out.println(uniqueCustomers.contains("Meera"));
+
+        Map<Integer, String> accountHolders = new HashMap<>();
+
+        accountHolders.put(1001, "Riya");
+        accountHolders.put(1002, "Arjun");
+        accountHolders.put(1003, "Meera");
+
+        System.out.println(accountHolders.get(1002));
+
+        accountHolders.put(1004, "Kabir");
+
+        for (Map.Entry<Integer, String> entry : accountHolders.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+6. Generics
+
+class Box<T> {
+    private T value;
+
+    public void set(T value) {
+        this.value = value;
+    }
+
+    public T get() {
+        return value;
+    }
+}
+
+public class Generics6{
+
+    public static <T> void printValue(T value) {
+        System.out.println(value);
+    }
+
+    public static void main(String[] args) {
+        Box<String> customerBox = new Box<>();
+        customerBox.set("Riya");
+
+        Box<Integer> accountBox = new Box<>();
+        accountBox.set(1001);
+
+        printValue(customerBox.get());
+        printValue(accountBox.get());
+        printValue(45000.0);
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////
+
+7. Lambda Expressions
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Lambda7 {
+    public static void main(String[] args) {
+        List<String> names = new ArrayList<>(
+                Arrays.asList("Riya", "Arjun", "Meera", "Kabir")
+        );
+
+        names.forEach(name -> System.out.println(name.toUpperCase()));
+
+        names.removeIf(name -> name.length() < 5);
+        System.out.println(names);
+
+        names.sort((name1, name2) -> name1.compareTo(name2));
+        System.out.println(names);
+    }
+}
+
+8. Streams
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Streams8{
+    public static void main(String[] args) {
+        List<Integer> amounts =
+                Arrays.asList(500, 1200, 3000, 450, 2500, 1200);
+
+        amounts.stream()
+                .filter(amount -> amount > 1000)
+                .forEach(System.out::println);
+
+        List<Double> bonusAmounts = amounts.stream()
+                .map(amount -> amount * 1.10)
+                .collect(Collectors.toList());
+        System.out.println(bonusAmounts);
+
+        amounts.stream()
+                .distinct()
+                .forEach(System.out::println);
+
+        amounts.stream()
+                .sorted()
+                .forEach(System.out::println);
+
+        long count = amounts.stream()
+                .filter(amount -> amount > 1000)
+                .count();
+        System.out.println(count);
+
+        int total = amounts.stream()
+                .reduce(0, Integer::sum);
+        System.out.println(total);
+
+        List<Integer> highAmounts = amounts.stream()
+                .filter(amount -> amount > 1000)
+                .collect(Collectors.toList());
+        System.out.println(highAmounts);
+
+        List<String> accountTypes = Arrays.asList(
+                "Savings", "Current", "Savings",
+                "Salary", "Current", "Savings"
+        );
+
+        accountTypes.stream()
+                .distinct()
+                .sorted()
+                .forEach(System.out::println);
+
+        long savingsCount = accountTypes.stream()
+                .filter(accountType -> accountType.equals("Savings"))
+                .count();
+        System.out.println(savingsCount);
+    }
+}
+
+
+9. Final Hands-on Activity
+
+
+import java.util.Arrays;
+import java.util.List;
+
+class CustomerAccount {
+    private int accountNumber;
+    private String customerName;
+    private String accountType;
+    private double balance;
+
+    public CustomerAccount(int accountNumber, String customerName,
+                           String accountType, double balance) {
+        this.accountNumber = accountNumber;
+        this.customerName = customerName;
+        this.accountType = accountType;
+        this.balance = balance;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String toString() {
+        return accountNumber + " | " + customerName + " | "
+                + accountType + " | " + balance;
+    }
+}
+
+public class CustomerAccountDemo {
+    public static void main(String[] args) {
+        List<CustomerAccount> accounts = Arrays.asList(
+                new CustomerAccount(1001, "Riya", "Savings", 45000),
+                new CustomerAccount(1002, "Arjun", "Current", 65000),
+                new CustomerAccount(1003, "Meera", "Savings", 30000),
+                new CustomerAccount(1004, "Kabir", "Salary", 80000)
+        );
+
+        for (CustomerAccount account : accounts) {
+            System.out.println(account);
+        }
+
+        System.out.println("\nBalance greater than 40,000:");
+        accounts.stream()
+                .filter(account -> account.getBalance() > 40000)
+                .forEach(System.out::println);
+
+        System.out.println("\nSavings accounts:");
+        accounts.stream()
+                .filter(account -> account.getAccountType().equals("Savings"))
+                .forEach(System.out::println);
+
+        System.out.println("\nSorted by balance:");
+        accounts.stream()
+                .sorted((account1, account2) ->
+                        Double.compare(account1.getBalance(),
+                                account2.getBalance()))
+                .forEach(System.out::println);
+
+        double totalBalance = accounts.stream()
+                .mapToDouble(account -> account.getBalance())
+                .sum();
+
+        System.out.println("\nTotal balance: " + totalBalance);
+    }
+}
+
+
+10. Short Review Questions
+
+No.	Answer
+1	= assigns a value; == compares values for primitive types or references for objects.
+2	A constructor initializes an object when it is created.
+3	Method overloading means having methods with the same name but different parameters.
+4	Inheritance allows one class to reuse and extend another class’s fields and methods.
+5	Private fields protect data by preventing direct access from outside the class.
+6	A List keeps insertion order and allows duplicates; a Set does not allow duplicate values.
+7	Use a Map to store key-value pairs, such as account number and account holder name.
+8	A generic type uses a type parameter, such as List<String>, to work safely with a specified data type.
+9	A lambda expression is a short way to write an anonymous function, often used with collections and streams.
+10	filter() keeps only stream elements that match a condition.
+11	map() transforms every stream element into a new value.
+12	collect() gathers stream results into a collection such as a List, Set, or Map.
+13	finally contains code that runs whether an exception occurs or not, commonly used for cleanup.
+
+
+
+
+
